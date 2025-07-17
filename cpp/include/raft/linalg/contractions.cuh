@@ -59,17 +59,6 @@ namespace linalg {
  */
 template <typename DataT, int _veclen, int _kblk, int _rpt, int _cpt, int _tr, int _tc>
 struct KernelPolicy {
-  KernelPolicy<float, _veclen, 32, 4, 4, 16, 16>
-  32 elements
-  veclen = 1
-  4 rows per thread
-  4 cols per thread
-  16 threads per row
-  16 threads per col
-
-  Kblk = 32
-  Veclen = 1
-  AccRowsPerTh = 4
   enum {
     /** number of elements along K worked upon per main loop iteration */
     Kblk = _kblk,
