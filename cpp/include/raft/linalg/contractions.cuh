@@ -59,6 +59,17 @@ namespace linalg {
  */
 template <typename DataT, int _veclen, int _kblk, int _rpt, int _cpt, int _tr, int _tc>
 struct KernelPolicy {
+  KernelPolicy<float, _veclen, 32, 4, 4, 16, 16>
+  32 elements
+  veclen = 1
+  4 rows per thread
+  4 cols per thread
+  16 threads per row
+  16 threads per col
+
+  Kblk = 32
+  Veclen = 1
+  AccRowsPerTh = 4
   enum {
     /** number of elements along K worked upon per main loop iteration */
     Kblk = _kblk,
@@ -169,6 +180,24 @@ template <int _veclen>
 struct Policy4x4<half, _veclen> {
   typedef KernelPolicy<half, _veclen, 64, 4, 4, 16, 16> Policy;
   typedef ColKernelPolicy<half, _veclen, 64, 4, 4, 16, 16> ColPolicy;
+};
+
+template <int _veclen>
+struct Policy4x4<uint8_t, _veclen> {
+  typedef KernelPolicy<uint8_t, _veclen, 128, 4, 4, 16, 16> Policy;
+  typedef ColKernelPolicy<uint8_t, _veclen, 128, 4, 4, 16, 16> ColPolicy;
+};
+
+template <int _veclen>
+struct Policy4x4<uint32_t, _veclen> {
+  typedef KernelPolicy<uint32_t, _veclen, 32, 4, 4, 16, 16> Policy;
+  typedef ColKernelPolicy<uint32_t, _veclen, 32, 4, 4, 16, 16> ColPolicy;
+};
+
+template <int _veclen>
+struct Policy4x4<uint64_t, _veclen> {
+  typedef KernelPolicy<uint64_t, _veclen, 16, 4, 4, 16, 16> Policy;
+  typedef ColKernelPolicy<uint64_t, _veclen, 16, 4, 4, 16, 16> ColPolicy;
 };
 /** @} */
 
