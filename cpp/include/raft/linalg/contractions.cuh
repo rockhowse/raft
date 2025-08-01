@@ -75,15 +75,15 @@ struct KernelPolicy {
     /** total threads per block */
     Nthreads = AccThRows * AccThCols,
     /** output tile size along rows */
-    Mblk = AccRowsPerTh * AccThRows,
+    Mblk = AccRowsPerTh * AccThRows, // 4 * 16 = 64
     /** output tile size along cols */
     Nblk = AccColsPerTh * AccThCols,
     /** number of threads loading a single row */
-    LdgThRow = Kblk / Veclen,
+    LdgThRow = Kblk / Veclen, // 32 / 1 = 32
     /** number of LDGs issued by a single thread for X */
-    LdgPerThX = Mblk * LdgThRow / Nthreads,
+    LdgPerThX = Mblk * LdgThRow / Nthreads, // 16 * 32 / 256 = 2
     /** number of LDGs issued by a single thread for Y */
-    LdgPerThY = Nblk * LdgThRow / Nthreads,
+    LdgPerThY = Nblk * LdgThRow / Nthreads, // 16 * 32 / 256 = 2
     /** number of rows of X covered per LDG */
     LdgRowsX = Mblk / LdgPerThX,
     /** number of rows of Y covered per LDG */
@@ -91,13 +91,13 @@ struct KernelPolicy {
     /** stride for accessing X/Y data in shared mem */
     SmemStride = Kblk + Veclen,
     /** size of one page for storing X data */
-    SmemPageX = SmemStride * Mblk,
+    SmemPageX = SmemStride * Mblk, // 32 * 64 = 2048
     /** size of one page for storing Y data */
-    SmemPageY = SmemStride * Nblk,
+    SmemPageY = SmemStride * Nblk, // 32 * 64 = 2048
     /** size of one smem page */
-    SmemPage = SmemPageX + SmemPageY,
+    SmemPage = SmemPageX + SmemPageY, // 2048 + 2048 = 4096
     /** size (in B) for smem needed */
-    SmemSize = 2 * SmemPage * sizeof(DataT),
+    SmemSize = 2 * SmemPage * sizeof(DataT),   // 2 * 4096 * 4 = 32768
   };  // enum
 
 };  // struct KernelPolicy
@@ -197,6 +197,12 @@ template <int _veclen>
 struct Policy4x4Skinny<double, _veclen> {
   typedef KernelPolicy<double, _veclen, 8, 4, 4, 8, 8> Policy;
   typedef ColKernelPolicy<double, _veclen, 8, 4, 4, 8, 8> ColPolicy;
+};
+
+template <int _veclen>
+struct Policy4x4Skinny<uint8_t, _veclen> {
+  typedef KernelPolicy<uint8_t, _veclen, 8, 4, 4, 8, 8> Policy;
+  typedef ColKernelPolicy<uint8_t, _veclen, 8, 4, 4, 8, 8> ColPolicy;
 };
 
 /**
