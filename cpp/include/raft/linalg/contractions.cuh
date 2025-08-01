@@ -201,8 +201,8 @@ struct Policy4x4Skinny<double, _veclen> {
 
 template <int _veclen>
 struct Policy4x4Skinny<uint8_t, _veclen> {
-  typedef KernelPolicy<uint8_t, _veclen, 16, 4, 4, 8, 8> Policy;
-  typedef ColKernelPolicy<uint8_t, _veclen, 16, 4, 4, 8, 8> ColPolicy;
+  typedef KernelPolicy<uint8_t, _veclen, 32, 4, 4, 8, 8> Policy;
+  typedef ColKernelPolicy<uint8_t, _veclen, 32, 4, 4, 8, 8> ColPolicy;
 };
 
 /**
