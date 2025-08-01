@@ -91,13 +91,13 @@ struct KernelPolicy {
     /** stride for accessing X/Y data in shared mem */
     SmemStride = Kblk + Veclen,
     /** size of one page for storing X data */
-    SmemPageX = SmemStride * Mblk, // 32 * 64 = 2048
+    SmemPageX = SmemStride * Mblk,
     /** size of one page for storing Y data */
-    SmemPageY = SmemStride * Nblk, // 32 * 64 = 2048
+    SmemPageY = SmemStride * Nblk,
     /** size of one smem page */
-    SmemPage = SmemPageX + SmemPageY, // 2048 + 2048 = 4096
+    SmemPage = SmemPageX + SmemPageY,
     /** size (in B) for smem needed */
-    SmemSize = 2 * SmemPage * sizeof(DataT),   // 2 * 4096 * 4 = 32768
+    SmemSize = 2 * SmemPage * sizeof(DataT),
   };  // enum
 
 };  // struct KernelPolicy
