@@ -111,29 +111,17 @@ class rmat_lanczos_tests
 
   void Run()
   {
-    int runtimeVersion;
-    cudaError_t result = cudaRuntimeGetVersion(&runtimeVersion);
-
-    if (result == cudaSuccess) {
-      int major = runtimeVersion / 1000;
-      int minor = (runtimeVersion % 1000) / 10;
-
-      // Skip gtests for CUDA 11.4.x and below because hard-coded results are causing issues.
-      // See https://github.com/rapidsai/raft/issues/2519 for more information.
-      if (major == 11 && minor <= 4) { GTEST_SKIP(); }
-    }
-
     uint64_t n_edges   = sparsity * ((long long)(1 << r_scale) * (long long)(1 << c_scale));
     uint64_t n_nodes   = 1 << std::max(r_scale, c_scale);
     uint64_t theta_len = std::max(r_scale, c_scale) * 4;
 
-    auto theta = raft::make_device_vector<ValueType, uint32_t, raft::row_major>(handle, theta_len);
+    auto theta = raft::make_device_vector<ValueType, IndexType, raft::row_major>(handle, theta_len);
     raft::random::uniform<ValueType>(handle, rng, theta.view(), 0, 1);
 
-    auto out =
-      raft::make_device_matrix<IndexType, uint32_t, raft::row_major>(handle, n_edges * 2, 2);
-    auto out_src = raft::make_device_vector<IndexType, uint32_t, raft::row_major>(handle, n_edges);
-    auto out_dst = raft::make_device_vector<IndexType, uint32_t, raft::row_major>(handle, n_edges);
+    auto out = raft::make_device_mdarray<IndexType, IndexType, raft::row_major>(
+      handle, raft::extents<IndexType, raft::dynamic_extent, 2>(n_edges * 2, 2));
+    auto out_src = raft::make_device_vector<IndexType, IndexType, raft::row_major>(handle, n_edges);
+    auto out_dst = raft::make_device_vector<IndexType, IndexType, raft::row_major>(handle, n_edges);
 
     raft::random::RngState rng1{params.seed};
 
@@ -282,15 +270,6 @@ class lanczos_tests : public ::testing::TestWithParam<lanczos_inputs<IndexType, 
   {
     int runtimeVersion;
     cudaError_t result = cudaRuntimeGetVersion(&runtimeVersion);
-
-    if (result == cudaSuccess) {
-      int major = runtimeVersion / 1000;
-      int minor = (runtimeVersion % 1000) / 10;
-
-      // Skip gtests for CUDA 11.4.x and below because hard-coded results are causing issues.
-      // See https://github.com/rapidsai/raft/issues/2519 for more information.
-      if (major == 11 && minor <= 4) { GTEST_SKIP(); }
-    }
 
     raft::random::uniform<ValueType>(handle, rng, v0.view(), 0, 1);
     std::tuple<IndexType, ValueType, IndexType> stats;
