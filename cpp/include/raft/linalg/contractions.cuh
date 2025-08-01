@@ -176,18 +176,6 @@ struct Policy4x4<uint8_t, _veclen> {
   typedef KernelPolicy<uint8_t, _veclen, 128, 4, 4, 16, 16> Policy;
   typedef ColKernelPolicy<uint8_t, _veclen, 128, 4, 4, 16, 16> ColPolicy;
 };
-
-template <int _veclen>
-struct Policy4x4<uint32_t, _veclen> {
-  typedef KernelPolicy<uint32_t, _veclen, 32, 4, 4, 16, 16> Policy;
-  typedef ColKernelPolicy<uint32_t, _veclen, 32, 4, 4, 16, 16> ColPolicy;
-};
-
-template <int _veclen>
-struct Policy4x4<uint64_t, _veclen> {
-  typedef KernelPolicy<uint64_t, _veclen, 16, 4, 4, 16, 16> Policy;
-  typedef ColKernelPolicy<uint64_t, _veclen, 16, 4, 4, 16, 16> ColPolicy;
-};
 /** @} */
 
 /**
