@@ -75,15 +75,15 @@ struct KernelPolicy {
     /** total threads per block */
     Nthreads = AccThRows * AccThCols,
     /** output tile size along rows */
-    Mblk = AccRowsPerTh * AccThRows, // 4 * 16 = 64
+    Mblk = AccRowsPerTh * AccThRows,
     /** output tile size along cols */
     Nblk = AccColsPerTh * AccThCols,
     /** number of threads loading a single row */
-    LdgThRow = Kblk / Veclen, // 32 / 1 = 32
+    LdgThRow = Kblk / Veclen,
     /** number of LDGs issued by a single thread for X */
-    LdgPerThX = Mblk * LdgThRow / Nthreads, // 16 * 32 / 256 = 2
+    LdgPerThX = Mblk * LdgThRow / Nthreads,
     /** number of LDGs issued by a single thread for Y */
-    LdgPerThY = Nblk * LdgThRow / Nthreads, // 16 * 32 / 256 = 2
+    LdgPerThY = Nblk * LdgThRow / Nthreads,
     /** number of rows of X covered per LDG */
     LdgRowsX = Mblk / LdgPerThX,
     /** number of rows of Y covered per LDG */
