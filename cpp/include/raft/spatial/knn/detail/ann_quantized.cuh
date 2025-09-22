@@ -16,7 +16,6 @@
 
 #pragma once
 
-#include "../ivf_flat.cuh"
 #include "processing.cuh"
 
 #include <raft/core/device_mdspan.hpp>
