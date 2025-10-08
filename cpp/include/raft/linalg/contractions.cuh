@@ -173,8 +173,8 @@ struct Policy4x4<half, _veclen> {
 
 template <int _veclen>
 struct Policy4x4<uint8_t, _veclen> {
-  typedef KernelPolicy<uint8_t, _veclen, 128, 4, 4, 16, 16> Policy;
-  typedef ColKernelPolicy<uint8_t, _veclen, 128, 4, 4, 16, 16> ColPolicy;
+  typedef KernelPolicy<uint8_t, _veclen, 64, 4, 4, 16, 16> Policy;
+  typedef ColKernelPolicy<uint8_t, _veclen, 64, 4, 4, 16, 16> ColPolicy;
 };
 /** @} */
 
@@ -201,8 +201,8 @@ struct Policy4x4Skinny<double, _veclen> {
 
 template <int _veclen>
 struct Policy4x4Skinny<uint8_t, _veclen> {
-  typedef KernelPolicy<uint8_t, _veclen, 32, 4, 4, 8, 8> Policy;
-  typedef ColKernelPolicy<uint8_t, _veclen, 32, 4, 4, 8, 8> ColPolicy;
+  typedef KernelPolicy<uint8_t, _veclen, 8, 4, 4, 8, 8> Policy;
+  typedef ColKernelPolicy<uint8_t, _veclen, 8, 4, 4, 8, 8> ColPolicy;
 };
 
 /**
