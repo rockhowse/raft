@@ -13,11 +13,8 @@ c_stdlib:
 c_stdlib_version:
   - "2.28"
 
-ucx_py_version:
-  - "0.46.*"
-
 ucxx_version:
-  - "0.46.*"
+  - "0.47.*"
 
 cmake_version:
   - ">=3.30.4"
